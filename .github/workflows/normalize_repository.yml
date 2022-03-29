@@ -3,7 +3,7 @@ on:
   pull_request:
     types: [opened, reopened]
 jobs:
-  report:
+  normalize_repo:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
