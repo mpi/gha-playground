@@ -14,7 +14,7 @@ jobs:
       - name: Commit changes
         run: |
           git config --global user.name 'dependabot[bot]'
-          git config --global user.email 'support@github.com'
+          git config --global user.email 'dependabot[bot]@users.noreply.github.com'
           git add repository.txt
           git commit -am "Adjusted repository URL" || echo "No changes to commit."
           git push
