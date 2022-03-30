@@ -4,6 +4,9 @@ on:
     types: [ opened, reopened ]
     paths:
       - '**package-lock.json'
+permissions:
+  pull-requests: write
+  contents: write
 
 jobs:
   normalize_repo:
@@ -13,7 +16,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Fix repository URL
         run: date +%s > repository.txt
       - name: Commit changes
