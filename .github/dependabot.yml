@@ -4,7 +4,7 @@ registries:
     type: npm-registry
     url: https://registry.npmjs.org
     username: required
-    password: required
+    password:
 updates:
   - package-ecosystem: "npm"
     directory: "/"
