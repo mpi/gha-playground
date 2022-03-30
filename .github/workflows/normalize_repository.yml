@@ -13,8 +13,8 @@ jobs:
         run: date +%s > repository.txt
       - name: Commit changes
         run: |
-          git config --global user.name 'Your Name'
-          git config --global user.email 'your-username@users.noreply.github.com'
+          git config --global user.name 'dependabot[bot]'
+          git config --global user.email 'support@github.com'
           git add repository.txt
-          git commit -am "Adjusted repository URL"
+          git commit -am "Adjusted repository URL" || echo "No changes to commit."
           git push
