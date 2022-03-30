@@ -1,4 +1,10 @@
 version: 2
+registries:
+  npm-npmjs:
+    type: npm-registry
+    url: https://registry.npmjs.org
+    username: required
+    password: required
 updates:
   - package-ecosystem: "npm"
     directory: "/"
