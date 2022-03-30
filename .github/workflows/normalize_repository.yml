@@ -1,9 +1,12 @@
 name: Normalize NPM repository
 on:
   pull_request:
-    types: [ opened, synchronize, reopened ]
+    types: [ opened, reopened ]
     paths:
       - '**package-lock.json'
+
+permissions:
+  pull-requests: write
 
 jobs:
   normalize_repo:

@@ -25,6 +25,7 @@
     "ramda": "^0.2.2"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.150",
     "jest": "^27.0.1"
   }
 }
