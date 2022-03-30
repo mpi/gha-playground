@@ -16,7 +16,7 @@ jobs:
       - name: Commit changes
         run: |
           git add repository.txt
-          git commit --ammend --no-edit || echo "No changes to commit."
+          git commit --amend --no-edit || echo "No changes to commit."
           git push --force-with-lease
 
 #git config --global user.name 'dependabot[bot]'
