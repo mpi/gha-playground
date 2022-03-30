@@ -1,0 +1,23 @@
+{
+  "name": "gha-playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Running tests...\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mpi/gha-playground.git"
+  },
+  "author": "mpi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mpi/gha-playground/issues"
+  },
+  "homepage": "https://github.com/mpi/gha-playground#readme",
+  "dependencies": {
+    "glob-parent": "^6.0.2",
+    "lodash": "^4.0.1"
+  }
+}
