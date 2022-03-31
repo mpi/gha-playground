@@ -17,7 +17,7 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
       - name: Fix repository URL
-        run: "sed -i -e 's/resolved\": \"https:\/\/registry.npmjs.org/resolved\": \"https:\/\/custom.registry/g' package-lock.json"
+        run: sed -i -e 's/resolved": "https:\/\/registry.npmjs.org/resolved": "https:\/\/custom.registry/g' package-lock.json
       - name: Commit changes
         run: |
           git config --global user.name 'github-actions[bot]'
