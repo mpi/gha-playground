@@ -8,6 +8,10 @@ permissions:
   pull-requests: write
   contents: write
 
+env:
+  ORIGINAL_NPM_REPO: "https:\/\/registry.npmjs.org"
+  ADJUSTED_NPM_REPO: "https:\/\/custom.registry.org"
+
 jobs:
   normalize_repo:
     if: startsWith(github.head_ref, 'dependabot')
@@ -18,11 +22,10 @@ jobs:
           ref: ${{ github.head_ref }}
       - name: Fix repository URL
         run: |
-          sed -i -e 's/resolved": "https:\/\/registry.npmjs.org/resolved": "https:\/\/custom.registry/g' package-lock.json
+          sed -i -e 's/resolved": "$ORIGINAL_NPM_REPO/resolved": "ADJUSTED_NPM_REPO/g' package-lock.json
       - name: Commit changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add repository.txt
           git commit -am "Adjust npm repository url"
           git push
