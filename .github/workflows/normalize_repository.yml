@@ -9,8 +9,8 @@ permissions:
   contents: write
 
 env:
-  ORIGINAL_NPM_REPO: https:\/\/registry.npmjs.org
-  ADJUSTED_NPM_REPO: https:\/\/custom.registry.org
+  ORIGINAL_NPM_REPO: 'https:\/\/registry.npmjs.org'
+  ADJUSTED_NPM_REPO: 'https:\/\/custom.registry.org'
 
 jobs:
   normalize_repo:
@@ -22,7 +22,7 @@ jobs:
           ref: ${{ github.head_ref }}
       - name: Fix repository url
         run: |
-          sed -i -e 's/resolved": "$ORIGINAL_NPM_REPO/resolved": "ADJUSTED_NPM_REPO/g' package-lock.json
+          sed -i -e "s/resolved\": \"$ORIGINAL_NPM_REPO/resolved\": \"$ADJUSTED_NPM_REPO/g" package-lock.json
       - name: Commit changes
         run: |
           git config --global user.name 'github-actions[bot]'
