@@ -22,12 +22,14 @@ jobs:
       - name: Print Event
         run: |
           cat $GITHUB_EVENT_PATH
-      - name: Print Teams
+      - name: Print Existing Labels
         run: |
-          echo $TEAMS
+          echo "$LABELS"
+        env:
+          LABELS: ${{ join(github.event.pull_request.labels.*.name, '\n') }}
       - name: Calculate Teams
         run: |
-          echo $TEAMS | shuf | head -n 2 | paste -sd ','
+          echo "$TEAMS" | shuf | head -n 2 | paste -sd ','
       - name: Add Labels
         run: |
           gh pr edit $PR_NUM -R $GITHUB_REPOSITORY --add-label "team-1,team-2" --remove-label "reviewers-needed"
