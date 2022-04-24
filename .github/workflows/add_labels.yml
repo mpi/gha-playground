@@ -13,7 +13,10 @@ jobs:
     if: ${{ github.event.label.name == 'reviewers-needed' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Add Labels
+      - name: Print Event
+        run: |
+          cat $GITHUB_EVENT_PATH
+`      - name: Add Labels
         run: |
           gh pr edit --add-label "team-1,team-2" --remove-label "reviewers-needed"
         env:
