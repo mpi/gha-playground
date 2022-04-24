@@ -9,10 +9,10 @@ permissions:
   contents: write
 
 env:
-  TEAMS:
-    - team-1
-    - team-2
-    - team-3
+  TEAMS: |
+    team-1
+    team-2
+    team-3
 
 jobs:
   add_reviewer_labels:
@@ -27,7 +27,7 @@ jobs:
           echo $TEAMS
       - name: Add Labels
         run: |
-          gh pr edit $PR_NUM -R $GH_REPO --add-label "team-1,team-2" --remove-label "reviewers-needed"
+          gh pr edit $PR_NUM -R $GITHUB_REPOSITORY --add-label "team-1,team-2" --remove-label "reviewers-needed"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUM: ${{ github.event.pull_request.number }}
