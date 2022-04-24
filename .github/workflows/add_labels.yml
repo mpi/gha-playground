@@ -18,7 +18,7 @@ jobs:
           cat $GITHUB_EVENT_PATH
       - name: Add Labels
         run: |
-          gh pr edit -R mpi/gha-playground --add-label "team-1,team-2" --remove-label "reviewers-needed"
+          gh pr edit $PR_NUMBER -R mpi/gha-playground --add-label "team-1,team-2" --remove-label "reviewers-needed"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
