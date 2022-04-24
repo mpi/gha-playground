@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print Event
-        un: |
+        run: |
           cat $GITHUB_EVENT_PATH
       - name: Add Labels
         run: |
