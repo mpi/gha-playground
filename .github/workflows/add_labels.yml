@@ -14,9 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print Event
-        run: |
+        un: |
           cat $GITHUB_EVENT_PATH
-`     - name: Add Labels
+      - name: Add Labels
         run: |
           gh pr edit --add-label "team-1,team-2" --remove-label "reviewers-needed"
         env:
