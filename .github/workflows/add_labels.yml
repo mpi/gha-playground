@@ -21,3 +21,5 @@ jobs:
           gh pr edit --add-label "team-1,team-2" --remove-label "reviewers-needed"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          GH_REPO: ${{ github.event.repository.git_url }}
