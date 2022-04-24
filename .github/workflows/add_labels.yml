@@ -8,6 +8,12 @@ permissions:
   pull-requests: write
   contents: write
 
+env:
+  TEAMS:
+    - team-1
+    - team-2
+    - team-3
+
 jobs:
   add_reviewer_labels:
     if: ${{ github.event.label.name == 'reviewers-needed' }}
@@ -16,10 +22,13 @@ jobs:
       - name: Print Event
         run: |
           cat $GITHUB_EVENT_PATH
+      - name: Print Teams
+        run: |
+          echo $TEAMS
       - name: Add Labels
         run: |
-          gh pr edit $PR_NUMBER -R mpi/gha-playground --add-label "team-1,team-2" --remove-label "reviewers-needed"
+          gh pr edit $PR_NUM -R $GH_REPO --add-label "team-1,team-2" --remove-label "reviewers-needed"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          GH_REPO: ${{ github.event.repository.git_url }}
+          PR_NUM: ${{ github.event.pull_request.number }}
+          GH_REPO: ${{ github.event.repository.full_name }}
