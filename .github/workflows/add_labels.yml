@@ -15,4 +15,4 @@ jobs:
     steps:
       - name: Add Labels
         run: |
-          gh pr --add-label "team-1,team-2" --remove-label "reviewers-needed"
+          gh pr edit --add-label "team-1,team-2" --remove-label "reviewers-needed"
