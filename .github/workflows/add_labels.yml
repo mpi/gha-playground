@@ -30,20 +30,21 @@ jobs:
           LABELS: |
             ${{ join(github.event.pull_request.labels.*.name, '
             ') }}
-      - name: Calculate Reviewer Teams
+      - name: Calculate Reviewer Labels
         id: calculate_labels
         run: |
-          remaining_labels=$(comm -23 <(echo "$TEAMS" | sort) <(echo "$LABELS" | sort) | shuf)
-          echo "$LABELS$remaining_labels" | head -n $REVIEWERS | paste -sd ',' | xargs -I {} echo "::set-output name=labels::{}"
+          REMAINING_LABELS=$(comm -23 <(echo "$TEAMS" | sort) <(echo "$LABELS" | sort) | shuf)
+          echo -e "$LABELS\n$REMAINING_LABELS" | head -n $REVIEWERS | paste -sd ',' | xargs -I {} echo "::set-output name=labels::{}"
         env:
           LABELS: |
             ${{ join(github.event.pull_request.labels.*.name, '
             ') }}
-      - name: Print Reviewer Teams
+      - name: Print Reviewer Labels
         run: |
           echo "Labels: $LABELS"
         env:
           LABELS: ${{ steps.calculate_labels.outputs.labels }}
+      - name: Udpdate Labels
         run: |
           gh pr edit $PR_NUM -R $GITHUB_REPOSITORY --add-label "$LABELS" --remove-label "reviewers-needed"
         env:
