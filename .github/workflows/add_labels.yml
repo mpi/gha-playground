@@ -27,6 +27,7 @@ jobs:
           REMAINING_LABELS=$(comm -23 <(echo "$TEAMS" | sort) <(echo "$LABELS" | sort) | shuf)
           echo "Existing: $EXISTING_LABELS"
           echo "Remaining: $REMAINING_LABELS"
+          echo -e "Result: $EXISTING_LABELS\n$REMAINING_LABELS"
           echo -e "$EXISTING_LABELS\n$REMAINING_LABELS" | head -n $REVIEWERS | paste -sd ',' | xargs -I {} echo "::set-output name=labels::{}"
         env:
           LABELS: |
