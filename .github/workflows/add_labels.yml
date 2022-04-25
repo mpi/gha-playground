@@ -33,12 +33,17 @@ jobs:
       - name: Calculate Reviewer Teams
         id: calculate_labels
         run: |
-          comm -23 <(echo "$TEAMS" | sort) <(echo "$LABELS" | sort) | shuf | head -n $REVIEWERS | paste -sd ',' | xargs -I {} echo "::set-output name=labels::{}"
+          remaining_labels=$(comm -23 <(echo "$TEAMS" | sort) <(echo "$LABELS" | sort) | shuf)
+          echo "$LABELS$remaining_labels" | head -n $REVIEWERS | paste -sd ',' | xargs -I {} echo "::set-output name=labels::{}"
         env:
           LABELS: |
             ${{ join(github.event.pull_request.labels.*.name, '
             ') }}
-      - name: Update Labels
+      - name: Print Reviewer Teams
+        run: |
+          echo "Labels: $LABELS"
+        env:
+          LABELS: ${{ steps.calculate_labels.outputs.labels }}
         run: |
           gh pr edit $PR_NUM -R $GITHUB_REPOSITORY --add-label "$LABELS" --remove-label "reviewers-needed"
         env:
