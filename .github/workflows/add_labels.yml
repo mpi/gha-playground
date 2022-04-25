@@ -31,7 +31,7 @@ jobs:
             ') }}
       - name: Calculate Reviewer Teams
         run: |
-          comm -13 <(echo "$TEAMS" | sort) <(echo "$LABELS" | sort) | shuf | paste -sd ','
+          comm -23 <(echo "$TEAMS" | sort) <(echo "$LABELS" | sort) | shuf | paste -sd ','
         env:
           LABELS: |
             ${{ join(github.event.pull_request.labels.*.name, '
