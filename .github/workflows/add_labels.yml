@@ -20,21 +20,12 @@ jobs:
     if: ${{ github.event.label.name == 'reviewers-needed' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Print Event
-        run: |
-          cat $GITHUB_EVENT_PATH
-      - name: Print Existing Labels
-        run: |
-          echo "$LABELS"
-        env:
-          LABELS: |
-            ${{ join(github.event.pull_request.labels.*.name, '
-            ') }}
       - name: Calculate Reviewer Labels
         id: calculate_labels
         run: |
+          EXISTING_LABELS=$(comm -12 <(echo "$TEAMS" | sort) <(echo "$LABELS" | sort))
           REMAINING_LABELS=$(comm -23 <(echo "$TEAMS" | sort) <(echo "$LABELS" | sort) | shuf)
-          echo -e "$LABELS\n$REMAINING_LABELS" | head -n $REVIEWERS | paste -sd ',' | xargs -I {} echo "::set-output name=labels::{}"
+          echo -e "$EXISTING_LABELS\n$REMAINING_LABELS" | head -n $REVIEWERS | paste -sd ',' | xargs -I {} echo "::set-output name=labels::{}"
         env:
           LABELS: |
             ${{ join(github.event.pull_request.labels.*.name, '
