@@ -13,6 +13,7 @@ env:
     team-1
     team-2
     team-3
+  REVIEWERS: 2
 
 jobs:
   add_reviewer_labels:
@@ -30,19 +31,17 @@ jobs:
             ${{ join(github.event.pull_request.labels.*.name, '
             ') }}
       - name: Calculate Reviewer Teams
+        id: calculate_labels
         run: |
-          comm -23 <(echo "$TEAMS" | sort) <(echo "$LABELS" | sort) | shuf | paste -sd ','
+          comm -23 <(echo "$TEAMS" | sort) <(echo "$LABELS" | sort) | shuf | head -n $REVIEWERS | paste -sd ',' | xargs -I {} echo "::set-output name=labels::{}"
         env:
           LABELS: |
             ${{ join(github.event.pull_request.labels.*.name, '
             ') }}
-      - name: Calculate Teams
+      - name: Update Labels
         run: |
-          echo "$TEAMS" | shuf | head -n 2 | paste -sd ','
-      - name: Add Labels
-        run: |
-          gh pr edit $PR_NUM -R $GITHUB_REPOSITORY --add-label "team-1,team-2" --remove-label "reviewers-needed"
+          gh pr edit $PR_NUM -R $GITHUB_REPOSITORY --add-label "$LABELS" --remove-label "reviewers-needed"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUM: ${{ github.event.pull_request.number }}
-          GH_REPO: ${{ github.event.repository.full_name }}
+          LABELS: ${{ steps.calculate_labels.outputs.labels }}
