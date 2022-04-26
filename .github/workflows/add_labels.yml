@@ -14,11 +14,10 @@ env:
     :grey_exclamation: team-2
     team-3
   REVIEWERS: 2
-  TRIGGER_LABEL: reviewers-needed
 
 jobs:
   add_reviewer_labels:
-    if: github.event.label.name == env.TRIGGER_LABEL
+    if: ${{ github.event.label.name == 'reviewers-needed' }}
     runs-on: ubuntu-latest
     steps:
       - name: Calculate Reviewer Labels
@@ -38,7 +37,7 @@ jobs:
           LABELS: ${{ steps.calculate_labels.outputs.labels }}
       - name: Udpdate Labels
         run: |
-          gh pr edit $PR_NUM -R $GITHUB_REPOSITORY --add-label "$LABELS" --remove-label "$TRIGGER_LABEL"
+          gh pr edit $PR_NUM -R $GITHUB_REPOSITORY --add-label "$LABELS" --remove-label "reviewers-needed"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUM: ${{ github.event.pull_request.number }}
